@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Extraction of entity types",
+  "type": "object",
+  "required": ["entity_types"],
+  "additionalProperties": false,
+  "properties": {
+    "entity_types": {
+      "type": "array",
+      "description": "A list of all entity types found in the document.",
+      "items": {
+        "type": "object",
+        "required": ["name", "attributes"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the entity type, e.g. 'Person', 'Organization', 'Device', etc."
+          },
+          "attributes": {
+            "type": "array",
+            "description": "A list of attributes for this entity type.",
+            "items": {
+              "type": "object",
+              "required": ["name", "type", "description"],
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The name of the attribute, e.g. 'name', 'age', 'location', etc."
+                },
+                "type": {
+                  "description": "The type of the attribute. Use one of the listed primitive, temporal, spatial, or list types. For example, 'string' for text, 'date' for calendar dates, or 'list-of-strings' for multiple text values.",
+                  "type": "string",
+                  "enum": [
+                    "boolean",
+                    "number",
+                    "string",
+                    "integer",
+                    "float",
+                    "date",
+                    "time",
+                    "datetime",
+                    "duration",
+                    "geospatial-coordinate",
+                    "cartesian-coordinate",
+                    "list-of-booleans",
+                    "list-of-numbers",
+                    "list-of-strings",
+                    "list-of-integers",
+                    "list-of-floats",
+                    "list-of-dates",
+                    "list-of-times",
+                    "list-of-datetimes",
+                    "list-of-durations",
+                    "list-of-geospatial-coordinates",
+                    "list-of-cartesian-coordinates"
+                  ]
+                },
+                "description": {
+                  "type": "string",
+                  "description": "A short description of this attribute, e.g. 'The person's full name', 'The date the device was installed', etc."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

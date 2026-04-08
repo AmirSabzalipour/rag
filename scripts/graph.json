@@ -1,0 +1,148 @@
+{
+  "entities": [
+    {
+      "id": "facility:pump_station",
+      "name": "Pump Station",
+      "type": "Facility",
+      "attributes": {}
+    },
+    {
+      "id": "equipment:pump_a",
+      "name": "Pump A",
+      "type": "Equipment",
+      "attributes": {
+        "category": "Pump"
+      }
+    },
+    {
+      "id": "equipment:pump_b",
+      "name": "Pump B",
+      "type": "Equipment",
+      "attributes": {
+        "category": "Pump"
+      }
+    },
+    {
+      "id": "equipment:pump_c",
+      "name": "Pump C",
+      "type": "Equipment",
+      "attributes": {
+        "category": "Pump"
+      }
+    },
+    {
+      "id": "sensor:pressure_sensor",
+      "name": "Pressure Sensor",
+      "type": "Sensor",
+      "attributes": {}
+    },
+    {
+      "id": "sensor:flow_sensor",
+      "name": "Flow Sensor",
+      "type": "Sensor",
+      "attributes": {}
+    },
+    {
+      "id": "controller:plc",
+      "name": "PLC",
+      "type": "Controller",
+      "attributes": {
+        "controls": "Pump A, Pump B, Pump C"
+      }
+    },
+    {
+      "id": "system:scada_system",
+      "name": "SCADA system",
+      "type": "System",
+      "attributes": {
+        "monitors": "pumps and sensors",
+        "controls": "PLCs"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "source": "facility:pump_station",
+      "target": "equipment:pump_a",
+      "type": "contains"
+    },
+    {
+      "source": "facility:pump_station",
+      "target": "equipment:pump_b",
+      "type": "contains"
+    },
+    {
+      "source": "facility:pump_station",
+      "target": "equipment:pump_c",
+      "type": "contains"
+    },
+    {
+      "source": "facility:pump_station",
+      "target": "sensor:pressure_sensor",
+      "type": "contains"
+    },
+    {
+      "source": "facility:pump_station",
+      "target": "sensor:flow_sensor",
+      "type": "contains"
+    },
+    {
+      "source": "equipment:pump_a",
+      "target": "controller:plc",
+      "type": "controlled_by"
+    },
+    {
+      "source": "equipment:pump_b",
+      "target": "controller:plc",
+      "type": "controlled_by"
+    },
+    {
+      "source": "equipment:pump_c",
+      "target": "controller:plc",
+      "type": "controlled_by"
+    },
+    {
+      "source": "sensor:pressure_sensor",
+      "target": "system:scada_system",
+      "type": "provides_data_to"
+    },
+    {
+      "source": "sensor:flow_sensor",
+      "target": "system:scada_system",
+      "type": "provides_data_to"
+    },
+    {
+      "source": "system:scada_system",
+      "target": "equipment:pump_a",
+      "type": "monitors_status_of"
+    },
+    {
+      "source": "system:scada_system",
+      "target": "equipment:pump_b",
+      "type": "monitors_status_of"
+    },
+    {
+      "source": "system:scada_system",
+      "target": "equipment:pump_c",
+      "type": "monitors_status_of"
+    },
+    {
+      "source": "system:scada_system",
+      "target": "sensor:pressure_sensor",
+      "type": "monitors_status_of"
+    },
+    {
+      "source": "system:scada_system",
+      "target": "sensor:flow_sensor",
+      "type": "monitors_status_of"
+    },
+    {
+      "source": "system:scada_system",
+      "target": "controller:plc",
+      "type": "sends_commands_to",
+      "attributes": {
+        "commands": "start, stop pumps"
+      }
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Extraction of entities",
+  "type": "object",
+  "required": ["entities"],
+  "additionalProperties": false,
+  "properties": {
+    "entities": {
+      "type": "array",
+      "description": "List of all entities detected in the document.",
+      "items": {
+        "type": "object",
+        "required": ["type", "name", "description", "attributes"],
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type of the entity, e.g. 'Person', 'Organization', 'Device', etc."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the entity"
+          },
+          "description": {
+            "type": "string",
+            "description": "A short description of the entity"
+          },
+          "attributes": {
+            "type": "array",
+            "description": "List of attributes for the entity, an empty array if no attributes are found.",
+            "items": {
+              "type": "object",
+              "required": ["name", "description", "value"],
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the attribute, e.g. 'age', 'location', 'status', etc."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "A short description of the attribute."
+                },
+                "value": {
+                  "type": ["string", "number", "boolean", "null"],
+                  "description": "Value of the attribute."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

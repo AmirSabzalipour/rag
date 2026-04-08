@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Extraction of entities and relationships",
+  "type": "object",
+  "required": ["entities", "relationships"],
+  "additionalProperties": false,
+  "properties": {
+    "entities": {
+      "type": "array",
+      "description": "List of all entities detected in the paragraph",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "name"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Stable unique identifier for the entity"
+          },
+          "type": {
+            "type": "string",
+            "description": "Entity type according to ontology"
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable name of the entity"
+          },
+          "attributes": {
+            "type": "object",
+            "description": "Optional dictionary of additional attributes for the entity",
+            "additionalProperties": {
+              "type": ["string", "number", "boolean", "null"]
+            },
+            "default": {}
+          }
+        }
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "description": "List of all relationships detected in the paragraph",
+      "items": {
+        "type": "object",
+        "required": ["source", "target", "type"],
+        "additionalProperties": false,
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "ID of the source entity"
+          },
+          "target": {
+            "type": "string",
+            "description": "ID of the target entity"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of relationship (predicate) according to ontology"
+          },
+          "attributes": {
+            "type": "object",
+            "description": "Optional dictionary of additional attributes for the relationship",
+            "additionalProperties": {
+              "type": ["string", "number", "boolean", "null"]
+            },
+            "default": {}
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Extraction of relationship types",
+  "type": "object",
+  "required": ["relationship_types"],
+  "additionalProperties": false,
+  "properties": {
+    "relationship_types": {
+      "type": "object",
+      "description": "Defines all relationships in the document. Each key is a relationship name, and its value includes a description plus the allowed types for the source and target entities.",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "description",
+          "allowed_source_types",
+          "allowed_target_types"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "A short description of this relationship type"
+          },
+          "allowed_source_types": {
+            "description": "The allowed types for the source entity in this relationship type, an empty array means any type is allowed.",
+            "type": "array",
+            "items": {
+              "enum": ["<ENTITY_TYPES>"]
+            }
+          },
+          "allowed_target_types": {
+            "description": "The allowed types for the target entity in this relationship type, an empty array means any type is allowed.",
+            "type": "array",
+            "items": {
+              "enum": ["<ENTITY_TYPES>"]
+            }
+          }
+        }
+      }
+    }
+  }
+}

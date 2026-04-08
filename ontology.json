@@ -1,0 +1,155 @@
+{
+  "entity_types": {
+    "ComputeNode": {
+      "description": "A computational system hosting services, software, or applications that manage connected devices."
+    },
+    "Server": {
+      "description": "A specific type of ComputeNode that provides centralized services or data storage."
+    },
+    "Gateway": {
+      "description": "A network device that routes, translates, or bridges communication across protocols or networks."
+    },
+    "Driver": {
+      "description": "A software component enabling communication with specific devices or protocols."
+    },
+    "Protocol": {
+      "description": "A formal specification defining communication rules between devices or systems."
+    },
+    "FieldDevice": {
+      "description": "A physical device that interacts with the physical world, such as sensors or actuators."
+    },
+    "ControlDevice": {
+      "description": "A device that processes data and executes control logic, e.g., PLCs, RTUs."
+    },
+    "Channel": {
+      "description": "A data pathway for signals between devices, optionally labeled as input or output."
+    },
+    "Tag": {
+      "description": "A uniquely identifiable telemetry element representing a measurable or controllable parameter."
+    },
+    "Alarm": {
+      "description": "An event or signal indicating a condition that requires attention or intervention."
+    },
+    "Plant": {
+      "description": "A top-level operational entity representing the overall facility or system."
+    },
+    "Area": {
+      "description": "A subdivision of a Plant representing a logical or physical section of operations."
+    },
+    "Line": {
+      "description": "A coordinated set of devices and processes forming a production or operational line."
+    },
+    "Cell": {
+      "description": "A localized unit within a Line, grouping devices and channels for a specific task."
+    },
+    "DataType": {
+      "description": "A formal definition of the structure and meaning of data exchanged in the system."
+    },
+    "Unit": {
+      "description": "A measurement standard associated with quantitative data values."
+    },
+    "KPI": {
+      "description": "A key performance indicator used to monitor process or system behavior."
+    },
+    "User": {
+      "description": "An individual or system account authorized to access and interact with the SCADA system."
+    },
+    "Role": {
+      "description": "A collection of permissions defining access rights and responsibilities."
+    },
+    "Permission": {
+      "description": "A specific right or capability assigned to a Role or User."
+    },
+    "View": {
+      "description": "A configured representation of system entities and data for visualization or analysis."
+    },
+    "Dashboard": {
+      "description": "An organized collection of Views displaying multiple metrics or signals."
+    }
+  },
+  "relationship_types": {
+    "HOSTS": {
+      "description": "Indicates that a ComputeNode hosts another software component or service.",
+      "source_types": ["ComputeNode"],
+      "target_types": ["Driver", "Server"]
+    },
+    "RUNS_ON": {
+      "description": "Indicates that software (Driver, Server) runs on a specific ComputeNode.",
+      "source_types": ["Driver", "Server"],
+      "target_types": ["ComputeNode"]
+    },
+    "CONNECTS_TO": {
+      "description": "Represents network connectivity between gateways or compute nodes.",
+      "source_types": ["Gateway", "ComputeNode"],
+      "target_types": ["Gateway", "ComputeNode"]
+    },
+    "USES_PROTOCOL": {
+      "description": "Denotes which Protocol is used by a Driver, Gateway, or FieldDevice.",
+      "source_types": ["Driver", "Gateway", "FieldDevice", "ControlDevice"],
+      "target_types": ["Protocol"]
+    },
+    "CONTROLS": {
+      "description": "Represents a ControlDevice managing or controlling a FieldDevice or Channel.",
+      "source_types": ["ControlDevice"],
+      "target_types": ["FieldDevice", "Channel"]
+    },
+    "SENDS_SIGNAL_TO": {
+      "description": "Represents data flow or telemetry from one Channel or Tag to another device or channel.",
+      "source_types": ["Channel", "Tag"],
+      "target_types": ["ControlDevice", "FieldDevice", "Channel", "Tag"]
+    },
+    "MEASURES": {
+      "description": "Represents that a FieldDevice measures or observes a Tag.",
+      "source_types": ["FieldDevice"],
+      "target_types": ["Tag"]
+    },
+    "GENERATES": {
+      "description": "Indicates that a device or system generates an Alarm or KPI.",
+      "source_types": ["ControlDevice", "FieldDevice", "Driver"],
+      "target_types": ["Alarm", "KPI"]
+    },
+    "CONTAINS": {
+      "description": "Represents hierarchical containment, e.g., Plant contains Areas, Line contains Cells.",
+      "source_types": ["Plant", "Area", "Line", "Cell"],
+      "target_types": [
+        "Area",
+        "Line",
+        "Cell",
+        "Channel",
+        "FieldDevice",
+        "ControlDevice"
+      ]
+    },
+    "ASSIGNED_TO": {
+      "description": "Represents a User assigned to a Role or a Permission assigned to a Role/User.",
+      "source_types": ["User", "Permission"],
+      "target_types": ["Role", "User"]
+    },
+    "ALLOWS_ACCESS_TO": {
+      "description": "Represents that a Role grants access to a View, Dashboard, or Device.",
+      "source_types": ["Role"],
+      "target_types": [
+        "View",
+        "Dashboard",
+        "ComputeNode",
+        "ControlDevice",
+        "FieldDevice"
+      ]
+    },
+    "DISPLAYS": {
+      "description": "Indicates that a View or Dashboard displays data from a Tag, KPI, or Alarm.",
+      "source_types": ["View", "Dashboard"],
+      "target_types": ["Tag", "KPI", "Alarm"]
+    },
+    "ASSOCIATED_WITH_UNIT": {
+      "description": "Indicates that a Tag or KPI uses a specific measurement Unit.",
+      "source_types": ["Tag", "KPI"],
+      "target_types": ["Unit"]
+    },
+    "HAS_DATATYPE": {
+      "description": "Indicates that a Tag, Channel, or KPI has a specific DataType.",
+      "source_types": ["Tag", "Channel", "KPI"],
+      "target_types": ["DataType"]
+    }
+  }
+}

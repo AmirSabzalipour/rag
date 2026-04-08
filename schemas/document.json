@@ -1,0 +1,160 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/document",
+  "type": "object",
+  "definitions": {
+    "fragment": {
+      "type": "object",
+      "required": ["content", "emph", "strong", "link"],
+      "additionalProperties": false,
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "The text content of the fragment"
+        },
+        "emph": {
+          "type": "boolean",
+          "description": "Whether the text is emphasized (e.g. italicized)"
+        },
+        "strong": {
+          "type": "boolean",
+          "description": "Whether the text is strongly emphasized (e.g. bold)"
+        },
+        "link": {
+          "type": ["string", "null"],
+          "description": "URL if the text is a hyperlink",
+          "default": null
+        }
+      }
+    },
+    "locator": {
+      "type": ["string", "null"],
+      "description": "Locator for the source of this node, e.g. URL or file path and line number",
+      "default": null
+    },
+    "caption": {
+      "type": ["array", "null"],
+      "description": "Caption for the node (figure / table / listing), if applicable",
+      "items": { "$ref": "#/definitions/fragment" },
+      "default": null
+    },
+    "section": {
+      "type": "object",
+      "required": ["type", "origin", "title", "children"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "section" },
+        "origin": { "$ref": "#/definitions/locator" },
+        "title": { "type": "string" },
+        "body": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/node" }
+        }
+      }
+    },
+    "listing": {
+      "type": "object",
+      "required": ["type", "origin", "content"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "listing" },
+        "origin": { "$ref": "#/definitions/locator" },
+        "caption": { "$ref": "#/definitions/caption" },
+        "language": {
+          "type": ["string", "null"],
+          "description": "Programming language of the code listing (if present)",
+          "default": null
+        },
+        "content": { "type": "string" }
+      }
+    },
+    "list": {
+      "type": "object",
+      "required": ["type", "origin", "numbered", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "list" },
+        "origin": { "$ref": "#/definitions/locator" },
+        "numbered": {
+          "type": "boolean",
+          "description": "Whether this is a numbered (ordered) list or a bulleted (unordered) list"
+        },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/node" }
+        }
+      }
+    },
+    "paragraph": {
+      "type": "object",
+      "required": ["type", "origin", "content"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "paragraph" },
+        "origin": { "$ref": "#/definitions/locator" },
+        "content": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/fragment" },
+          "description": "List of text fragments that make up the paragraph content"
+        }
+      }
+    },
+    "figure": {
+      "type": "object",
+      "required": ["type", "origin", "caption", "image_location"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "figure" },
+        "origin": { "$ref": "#/definitions/locator" },
+        "source": {
+          "type": ["string", "null"],
+          "description": "URL or file path of the image source",
+          "default": null
+        },
+        "caption": { "$ref": "#/definitions/caption" }
+      }
+    },
+    "table": {
+      "type": "object",
+      "required": ["type", "origin", "caption", "header", "main", "footer"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "table" },
+        "origin": { "$ref": "#/definitions/locator" },
+        "caption": { "$ref": "#/definitions/caption" },
+        "header": {
+          "type": ["array", "null"],
+          "items": { "$ref": "#/definitions/node" },
+          "description": "The header row (if present)"
+        },
+        "main": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/node" },
+            "description": "List of main body rows"
+          }
+        },
+        "footer": {
+          "type": ["array", "null"],
+          "items": { "$ref": "#/definitions/node" },
+          "description": "The footer row (if present)"
+        }
+      }
+    },
+    "node": {
+      "oneOf": [
+        { "$ref": "#/definitions/paragraph" },
+        { "$ref": "#/definitions/section" },
+        { "$ref": "#/definitions/table" },
+        { "$ref": "#/definitions/figure" },
+        { "$ref": "#/definitions/list" }
+      ]
+    },
+    "document": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/node" },
+      "description": "The document is represented as a list of root nodes (typically sections)"
+    }
+  }
+}

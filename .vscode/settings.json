@@ -1,0 +1,22 @@
+{
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-python.black-formatter",
+  },
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "black-formatter.args": ["--line-length","80"],
+  "flake8.args": ["--line-length", "80"],
+  "python.defaultInterpreterPath": "./.venv/bin/python",
+  "json.schemas": [
+    {
+      "fileMatch": ["ontology.json"],
+      "url": "./schemas/ontology.json"
+    }
+  ],
+  "[cypher]": {
+    "editor.formatOnSave": true,
+  }
+}
